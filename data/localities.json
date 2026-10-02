@@ -1,0 +1,44 @@
+[
+  {
+    "name": "Gachibowli",
+    "slug": "gachibowli",
+    "lastUpdated": "September 2026",
+    "dataStatus": "Sample / demonstration data only — fictional examples, not market observations",
+    "salePriceRangePsf": {"low": 9000, "high": 12000, "currency": "INR per sq ft"},
+    "rent2BhkRange": {"low": 30000, "high": 45000, "currency": "INR per month"},
+    "rent3BhkRange": {"low": 45000, "high": 70000, "currency": "INR per month"},
+    "estimatedGrossYieldPercent": 3.5,
+    "sampleSize": 0,
+    "propertyType": "Apartment",
+    "notes": "Fictional illustration. No listings were collected or reviewed. Yield figure is a demonstration example, not derived from the ranges.",
+    "examples": [{"type":"Illustrative 2BHK","sizeSqFt":1200,"askingPriceInr":12000000,"askingRentInr":35000},{"type":"Illustrative 3BHK","sizeSqFt":1650,"askingPriceInr":17325000,"askingRentInr":52000}]
+  },
+  {
+    "name": "Kondapur",
+    "slug": "kondapur",
+    "lastUpdated": "September 2026",
+    "dataStatus": "Sample / demonstration data only — fictional examples, not market observations",
+    "salePriceRangePsf": {"low": 7500, "high": 10500, "currency": "INR per sq ft"},
+    "rent2BhkRange": {"low": 27000, "high": 40000, "currency": "INR per month"},
+    "rent3BhkRange": {"low": 40000, "high": 62000, "currency": "INR per month"},
+    "estimatedGrossYieldPercent": 3.7,
+    "sampleSize": 0,
+    "propertyType": "Apartment",
+    "notes": "Fictional illustration. No listings were collected or reviewed. Yield figure is a demonstration example, not derived from the ranges.",
+    "examples": [{"type":"Illustrative 2BHK","sizeSqFt":1150,"askingPriceInr":10350000,"askingRentInr":32000},{"type":"Illustrative 3BHK","sizeSqFt":1500,"askingPriceInr":13500000,"askingRentInr":47000}]
+  },
+  {
+    "name": "Financial District",
+    "slug": "financial-district",
+    "lastUpdated": "September 2026",
+    "dataStatus": "Sample / demonstration data only — fictional examples, not market observations",
+    "salePriceRangePsf": {"low": 10000, "high": 14000, "currency": "INR per sq ft"},
+    "rent2BhkRange": {"low": 35000, "high": 55000, "currency": "INR per month"},
+    "rent3BhkRange": {"low": 55000, "high": 85000, "currency": "INR per month"},
+    "estimatedGrossYieldPercent": 3.4,
+    "sampleSize": 0,
+    "propertyType": "Apartment",
+    "notes": "Fictional illustration. No listings were collected or reviewed. Yield figure is a demonstration example, not derived from the ranges.",
+    "examples": [{"type":"Illustrative 2BHK","sizeSqFt":1300,"askingPriceInr":15600000,"askingRentInr":44000},{"type":"Illustrative 3BHK","sizeSqFt":1800,"askingPriceInr":21600000,"askingRentInr":65000}]
+  }
+]
