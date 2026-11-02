@@ -1,3 +1,13 @@
+# Raven — Hyderabad property research
+
+The current version adds an interactive expanded-Hyderabad map, 300 ward selections, corporation boundaries, a contact dialog, and shared-discussion server routes. See [SETUP.md](SETUP.md) for development, Vercel settings, service configuration, limitations, and data provenance. Run `npm test` and `npm run build`.
+
+Direct email delivery and shared posting require owner-configured server services. The map contains no verified rupee figures until reviewed records are imported.
+
+---
+
+## Original static area guides (Version 1 reference)
+
 # Hyderabad Property Data — Version 1
 
 A beginner-friendly, static educational website about Hyderabad residential property research. It has **eight HTML pages**, one CSS file, one small JavaScript file, and an editable JSON file. There is no backend, login, database, scraper, analytics tracker, or build step.
@@ -117,3 +127,4 @@ When you own the domain, follow [GitHub's current custom-domain guide](https://d
 - Publish sources, observation dates, sample sizes, exclusions, and limitations with any future real data. Require manual review before publishing it.
 
 This project is educational content only, not legal, tax, financial, real-estate, or investment advice.
+
