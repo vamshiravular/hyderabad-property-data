@@ -1,0 +1,7 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": null,
+  "governmentLookup": "https://registration.telangana.gov.in/UnitRateMV/getDistrictList.htm",
+  "note": "No verified government or observed market values have been imported. Fictional examples from version 1 are excluded from this map. Add reviewed records only with units, dates, property type, source, and evidence status.",
+  "records": []
+}
