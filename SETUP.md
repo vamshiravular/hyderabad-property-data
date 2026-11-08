@@ -57,6 +57,6 @@ The zeroes and dates above are schema placeholders, not valid production values.
 
 Primary administrative reference: https://hydraa.telangana.gov.in/about, checked 2026-11-01. Boundary geometry: https://access.hyderabad.urbanobservatory.in/data/boundaries.pmtiles and its `endpoints.json` manifest dated 2026-07-12. Ward geometry and attributes were decoded from zoom 14; buffered tiles were clipped, feature fragments unioned, geometry simplified by 0.000025 degrees, and coordinates rounded to six decimals. Source processing/metadata are attributed to Hyderabad Urban Lab / Hyderabad Urban Observatory; underlying layers keep their source terms. The map is indicative digitisation, not a certified legal survey. See `data-sources.html` for user-facing provenance.
 
-Expected totals: 300 wards (GHMC 150, Cyberabad 76, Malkajgiri 74), 60 circles, 12 zones, three municipal corporations, plus SCB and other special-area context. No old 150-ward-only geometry is used for the homepage.
+Expected totals: 300 wards (GHMC 150, Cyberabad 76, Malkajgiri 74), 60 circles, 12 zones, three municipal corporations, plus SCB and other special-area context. The property map uses the expanded footprint.
 
 No actual email delivery or live database write is validated until the owner configures the services and runs the delivery/posting checks above.
