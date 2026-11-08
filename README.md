@@ -1,6 +1,6 @@
-# Raven — Hyderabad property research
+# Raven · Hyderabad Citizen Guide
 
-The current version adds an interactive expanded-Hyderabad map, 300 ward selections, corporation boundaries, a contact dialog, and shared-discussion server routes. See [SETUP.md](SETUP.md) for development, Vercel settings, service configuration, limitations, and data provenance. Run `npm test` and `npm run build`.
+The homepage offers 12 English and Telugu guides to Telangana government services for Hyderabad residents. Each guide links to official sources. The [property map](property-map.html) includes 300 ward selections, corporation boundaries, a contact dialog, and shared discussions. See [SETUP.md](SETUP.md) for development, Vercel settings, service configuration, limitations, and data provenance. Run `npm test` and `npm run build`.
 
 Direct email delivery and shared posting require owner-configured server services. The map contains no verified rupee figures until reviewed records are imported.
 
