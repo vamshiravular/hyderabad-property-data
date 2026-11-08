@@ -1,6 +1,7 @@
 'use strict';
 (()=>{
  const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ const discussionForm=$('#discussion-form');
  const corps={ghmc:{name:'Greater Hyderabad Municipal Corporation',short:'GHMC',color:'#428c84'},cyberabad:{name:'Cyberabad Municipal Corporation',short:'Cyberabad',color:'#ce914b'},malkajgiri:{name:'Malkajgiri Municipal Corporation',short:'Malkajgiri',color:'#8b72bd'},scb:{name:'Secunderabad Cantonment Board',short:'SCB',color:'#9299aa'}};
  let data={},map,subLayer,corpLayer,specialLayer,highlight,labelLayer,selected=null,corp='all',activeType='wards',services={posting:false,discussions:false},nextPage=null,discussionVersion=0;
  const getJSON=async u=>{const r=await fetch(u);if(!r.ok)throw Error('Could not load '+u);return r.json();};
@@ -53,7 +54,7 @@
   $('#area-corp').textContent=corps[p.corporation_id].name.toUpperCase();$('#area-title').textContent=p.ward;
   $('#area-meta').textContent='Ward '+p.ward_no+' · '+corps[p.corporation_id].short;
   $('#area-breadcrumb').hidden=false;$('#area-breadcrumb').textContent=p.zone+' zone → '+p.circle+' circle';showValues(p.id);
-  $('#ward-picker').value=p.id;$('#discuss-area').disabled=false;$('#post-area').value=p.id;
+  $('#ward-picker').value=p.id;$('#discuss-area').disabled=false;if(discussionForm)$('#post-area').value=p.id;
   if(highlight)map.removeLayer(highlight);highlight=L.geoJSON(f,{interactive:false,style:{color:'#253353',weight:2.5,fillOpacity:.24,fillColor:corps[p.corporation_id].color}}).addTo(map);
   const bounds=highlight.getBounds();if(zoom)map.fitBounds(bounds,{paddingTopLeft:[35,100],paddingBottomRight:[35,35],maxZoom:14,animate:false});
   L.popup({maxWidth:250}).setLatLng(latlng||bounds.getCenter()).setContent('<span class="panel-eyebrow">'+esc(corps[p.corporation_id].short)+' · WARD '+p.ward_no+'</span><h4>'+esc(p.ward)+'</h4><p>Government value: exact-property lookup needed.<br>Market evidence: not yet researched.</p><a href="#area-title">View area details →</a>').openOn(map);
@@ -61,12 +62,14 @@
   const url=new URL(location.href);url.searchParams.set('ward',p.ward_no);history.replaceState(null,'',url);
  }
  function updateTabs(){document.querySelectorAll('[data-corp]').forEach(b=>{const active=b.dataset.corp===corp;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});}
- function clearSelection(){selected=null;if(highlight){map.removeLayer(highlight);highlight=null;}map.closePopup();$('#area-corp').textContent='GET TO KNOW A PLACE';$('#area-title').textContent='Every area has a story.';$('#area-meta').textContent='Click a ward or search for a neighbourhood.';$('#area-breadcrumb').hidden=true;$('#government-value').textContent='Select an area';$('#market-value').textContent='Select an area';$('#discuss-area').disabled=true;document.dispatchEvent(new CustomEvent('raven:area',{detail:null}));const url=new URL(location.href);url.searchParams.delete('ward');history.replaceState(null,'',url);}
+ function clearSelection(){selected=null;if(highlight){map.removeLayer(highlight);highlight=null;}map.closePopup();$('#area-corp').textContent='WARD DETAILS';$('#area-title').textContent='Select a ward';$('#area-meta').textContent='Click the map or search for a neighbourhood.';$('#area-breadcrumb').hidden=true;$('#government-value').textContent='Select an area';$('#market-value').textContent='Select an area';$('#discuss-area').disabled=true;document.dispatchEvent(new CustomEvent('raven:area',{detail:null}));const url=new URL(location.href);url.searchParams.delete('ward');history.replaceState(null,'',url);}
  async function initMap(){
   try{
    const values=await Promise.all(['wards','circles','zones','corporations','special'].map(n=>getJSON('data/'+n+'.geojson')));['wards','circles','zones','corporations','special'].forEach((n,i)=>data[n]=values[i]);data.values=await getJSON('data/area-values.json');
-   const index=data.wards.features.map(f=>f.properties).sort((a,b)=>a.ward.localeCompare(b.ward));
-   const opt=index.map(p=>`<option value="${esc(p.id)}">${esc(p.ward)} · ${p.ward_no}</option>`).join('');$('#post-area').insertAdjacentHTML('beforeend',opt);$('#discussion-area').insertAdjacentHTML('beforeend',opt);
+   if(discussionForm){
+    const index=data.wards.features.map(f=>f.properties).sort((a,b)=>a.ward.localeCompare(b.ward));
+    const opt=index.map(p=>`<option value="${esc(p.id)}">${esc(p.ward)} · ${p.ward_no}</option>`).join('');$('#post-area').insertAdjacentHTML('beforeend',opt);$('#discussion-area').insertAdjacentHTML('beforeend',opt);
+   }
    $('#map-loading').remove();if(!window.L)throw Error('The map library is unavailable. Use the ward selector below.');
    map=L.map('city-map',{zoomControl:false,scrollWheelZoom:false,zoomSnap:.25,minZoom:9,maxZoom:17,maxBounds:[[16.9,77.9],[17.95,79.1]],maxBoundsViscosity:.8});
    L.control.zoom({position:'bottomleft'}).addTo(map);L.control.scale({imperial:false,position:'bottomright'}).addTo(map);map.attributionControl.addAttribution('Boundaries: <a href="https://access.hyderabad.urbanobservatory.in/">Hyderabad Urban Lab</a> · 2026 digitisation');map.getPane('overlayPane').setAttribute('aria-hidden','true');
@@ -79,8 +82,15 @@
    $('#search-results').onclick=e=>{const b=e.target.closest('[data-ward]');if(!b)return;corp='all';updateTabs();updateFilters(true,true);draw();selectWard(b.dataset.ward);$('#area-search').value=data.wards.features.find(f=>f.properties.id===b.dataset.ward).properties.ward;$('#search-results').hidden=true;};
    $('#area-search').onkeydown=e=>{if(e.key==='Escape')$('#search-results').hidden=true;if(e.key==='Enter'){e.preventDefault();$('#search-results button')?.click();}};
    document.addEventListener('click',e=>{if(!e.target.closest('.map-search'))$('#search-results').hidden=true;});
-   $('#discuss-area').onclick=()=>{$('#discussion-area').value=selected.id;loadDiscussions();$('#community').scrollIntoView({behavior:'smooth'});};
-   const ward=new URLSearchParams(location.search).get('ward');if(ward)selectWard('ward-'+ward);
+   $('#discuss-area').onclick=()=>{
+    if(!discussionForm){location.href='property-map.html?ward='+selected.ward+'#community';return;}
+    $('#discussion-area').value=selected.id;loadDiscussions();location.hash='community';
+   };
+   const ward=new URLSearchParams(location.search).get('ward');
+   if(ward){
+    selectWard('ward-'+ward);
+    if(discussionForm&&selected&&location.hash==='#community')$('#discussion-area').value=selected.id;
+   }
   }catch(e){$('#area-count').textContent='Map loading failed. Please reload.';$('#city-map').innerHTML='<div class="map-loading">Map unavailable. Please reload or <a href="areas.html">browse area guides</a>.</div>';}
  }
  $('#map-sources').onclick=()=>{const d=document.createElement('dialog');d.className='raven-dialog';d.setAttribute('aria-label','Map boundary notes');d.innerHTML='<div class="dialog-top"><span>RAVEN · MAP NOTES</span><button class="dialog-close" aria-label="Close map notes">×</button></div><h2>The expanded Hyderabad.</h2><p>Three corporations, 12 zones, 60 circles, and 300 wards. Cyberabad includes the Serilingampally, Kukatpally, and Quthbullapur zones. Malkajgiri includes the Malkajgiri, Uppal, and LB Nagar zones. GHMC covers the remaining six zones.</p><p>Geometry digitised by Hyderabad Urban Lab, published in its July 2026 Accessibility Atlas, and simplified for this map. This is an indicative visualisation, not a legal boundary survey. Airport, BHEL, and Secunderabad Cantonment are shown separately in grey.</p><p><a href="data-sources.html">Read sources, coverage, and value methodology ↗</a></p>';document.body.append(d);d.querySelector('button').onclick=()=>d.close();d.onclose=()=>d.remove();d.showModal();};
@@ -100,7 +110,8 @@
   try{const r=await fetch('/api/discussions',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({displayName:f.get('displayName'),body:f.get('body'),wardId:f.get('wardId')||null,parentId,consent:f.has('consent'),website:f.get('website')||''})});const j=await r.json();if(!r.ok)throw Error(j.error||'Could not post your comment.');form.reset();status.textContent='Your comment is published.';await loadDiscussions();}
   catch(e){status.textContent=e.message;}finally{button.disabled=!services.posting;}
  }
- $('#discussion-form').onsubmit=e=>{e.preventDefault();submitComment(e.currentTarget,$('#post-status'),$('#post-discussion'));};
+ if(!discussionForm){initMap();return;}
+ discussionForm.onsubmit=e=>{e.preventDefault();submitComment(e.currentTarget,$('#post-status'),$('#post-discussion'));};
  $('#discussion-area').onchange=()=>loadDiscussions();$('#refresh-discussions').onclick=()=>loadDiscussions();$('#load-more').onclick=()=>loadDiscussions(true);
  $('#discussion-list').onclick=e=>{const b=e.target.closest('[data-reply]');if(!b)return;const slot=b.closest('article').querySelector('.reply-slot');if(slot.firstChild){slot.innerHTML='';return;}if(!services.posting)return;
   slot.innerHTML='<form class="reply-form"><label>Your display name<input name="displayName" required minlength="2" maxlength="60"></label><label>Your reply<textarea name="body" required minlength="10" maxlength="2000" rows="3"></textarea></label><label class="consent"><input name="consent" type="checkbox" required><span>I understand this reply will be public.</span></label><div class="honey" aria-hidden="true"><input name="website" tabindex="-1"></div><button class="primary" type="submit">Post reply ↗</button><p class="form-status" role="status"></p></form>';const form=slot.querySelector('form');form.onsubmit=e=>{e.preventDefault();submitComment(form,form.querySelector('.form-status'),form.querySelector('button'),b.dataset.reply);};form.querySelector('input').focus();};

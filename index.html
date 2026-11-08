@@ -4,68 +4,50 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#173c37">
-  <meta name="description" content="Find government services in Hyderabad. Get simple guides in English and Telugu for land registration, certificates, benefits, licences, and public offices.">
+  <meta name="description" content="Explore the Hyderabad property map and find government services. Get simple guides in English and Telugu for land registration, certificates, benefits, licences, and public offices.">
   <title>Hyderabad Citizen Guide · Raven</title>
   <link rel="icon" href="images/raven.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="vendor/leaflet.css">
+  <link rel="stylesheet" href="raven.css">
   <link rel="stylesheet" href="citizen-guide.css">
+  <script defer src="vendor/leaflet.js"></script>
+  <script defer src="contact.js"></script>
+  <script defer src="raven.js"></script>
   <script defer src="citizen-guide.js"></script>
-</head>
+<link rel="stylesheet" href="site-header.css"><script defer src="site-navigation.js"></script></head>
 <body>
   <a class="skip-link" href="#main"><span lang="en">Skip to content</span><span lang="te">ప్రధాన విషయానికి వెళ్లండి</span></a>
-  <header class="site-header">
-    <div class="wrap header-inner">
-      <a class="brand" href="index.html">
-        <img src="images/raven.svg" width="38" height="38" alt="">
-        <span><strong lang="en">Hyderabad Citizen Guide</strong><strong lang="te">హైదరాబాద్ పౌర సేవల మార్గదర్శిని</strong><small>RAVEN · HYDERABAD</small></span>
-      </a>
-      <nav class="header-links" aria-label="Site">
-        <a href="#guides"><span lang="en">Service guides</span><span lang="te">సేవల వివరాలు</span></a>
-        <a href="property-map.html#explore"><span lang="en">Property map</span><span lang="te">ఆస్తుల మ్యాప్</span></a>
-      </nav>
-      <div class="language" role="group" aria-label="Language / భాష" data-enhancement hidden>
-        <button type="button" data-language="en" aria-pressed="true">English</button>
-        <button type="button" data-language="te" aria-pressed="false">తెలుగు</button>
-      </div>
-    </div>
-  </header>
+  <!-- site-header -->
   <main id="main">
-    <section class="hero">
-      <div class="wrap hero-inner">
-        <div class="hero-copy">
-          <p class="eyebrow"><span lang="en">HYDERABAD, TELANGANA</span><span lang="te">హైదరాబాద్, తెలంగాణ</span></p>
-          <h1><span lang="en">What do you<br>need to do?</span><span lang="te">మీకు ఏ సేవ కావాలి?</span></h1>
-          <p class="hero-description"><span lang="en">Find the right government service, get your documents ready, and know where to apply.</span><span lang="te">మీకు కావాల్సిన ప్రభుత్వ సేవను కనుగొనండి. ఏ పత్రాలు కావాలో, ఎక్కడ దరఖాస్తు చేయాలో తెలుసుకోండి.</span></p>
+    <section id="explore" class="wide home-map" aria-labelledby="map-heading">
+      <div class="home-map-heading">
+        <div>
+          <h1 id="map-heading"><span lang="en">Hyderabad property map</span><span lang="te">హైదరాబాద్ ఆస్తుల మ్యాప్</span></h1>
+          <p><span lang="en">Explore wards across GHMC, Cyberabad, and Malkajgiri.</span><span lang="te">జీహెచ్‌ఎంసీ, సైబరాబాద్, మల్కాజిగిరి వార్డులను చూడండి.</span></p>
+        </div>
+        <a href="#guides"><span lang="en">Go to citizen guides</span><span lang="te">పౌర సేవలకు వెళ్లండి</span> <span aria-hidden="true">↓</span></a>
+      </div>
+      <!-- property-explorer -->
+    </section>
+    <section class="wide directory" id="guides" aria-labelledby="directory-title">
+      <div class="directory-intro">
+        <div>
+          <h2 id="directory-title"><span lang="en">Citizen guides</span><span lang="te">పౌర సేవల మార్గదర్శిని</span></h2>
+          <p><span lang="en">Find the documents you need, the steps to follow, and where to apply.</span><span lang="te">కావాల్సిన పత్రాలు, పాటించాల్సిన దశలు, ఎక్కడ దరఖాస్తు చేయాలో తెలుసుకోండి.</span></p>
+        </div>
+        <div class="language" role="group" aria-label="Language / భాష" data-enhancement hidden>
+          <button type="button" data-language="en" lang="en" aria-pressed="true">English</button>
+          <button type="button" data-language="te" lang="te" aria-pressed="false">తెలుగు</button>
+        </div>
+      </div>
           <form class="search" role="search" data-enhancement hidden>
             <label class="sr-only" for="service-search"><span lang="en">Search citizen services</span><span lang="te">పౌర సేవలను వెతకండి</span></label>
             <svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4 4"/></svg>
             <input id="service-search" type="search" placeholder="Try income certificate, EC, or licence" autocomplete="off">
             <button type="submit"><span lang="en">Search</span><span lang="te">వెతకండి</span></button>
           </form>
-        </div>
-        <svg class="city-illustration" viewBox="0 0 420 284" fill="none" aria-hidden="true">
-          <circle cx="269" cy="121" r="89" fill="#e6b974" opacity=".14"/>
-          <circle cx="269" cy="121" r="108" stroke="#a6c4ab" stroke-dasharray="3 8" opacity=".5"/>
-          <g stroke="#a6c4ab" stroke-width="1.2" opacity=".55">
-            <path d="M12 246h396M21 230h39v-29h21v29h24v-50h30v50h16M311 230h20v-23h18v-31h25v54h26"/>
-            <path d="M39 230v-13h13v13m302-44v13m12-13v13M97 112h12m-6-6v12m265-42h16m-8-8v16M52 158h13m-6-6v12M327 40h10m-5-5v10"/>
-          </g>
-          <g stroke="#edc78a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M154 240h156m-150-10h144v10H160zm23 0v-96h98v96m-98-96 49-33 49 33m-98 17h98m-88-10h78"/>
-            <path d="M213 230v-39c0-12 9-20 19-26 10 6 19 14 19 26v39m-29 0v-36c0-7 4-13 10-18 6 5 10 11 10 18v36"/>
-            <path d="M193 194v-16c0-4 3-8 6-10 3 2 6 6 6 10v16zm66 0v-16c0-4 3-8 6-10 3 2 6 6 6 10v16z"/>
-            <path d="M164 230V84h19v146m98 0V84h19v146M161 98h25m92 0h25M161 123h25m92 0h25M161 145h25m92 0h25M161 181h25m92 0h25M161 204h25m92 0h25M161 83h25m92 0h25"/>
-            <path d="M161 83c0-9 4-16 12-21 8 5 13 12 13 21m92 0c0-9 4-16 12-21 8 5 13 12 13 21M173 62V51m117 11V51M169 111h9m108 0h9m-126 51h9m108 0h9"/>
-          </g>
-          <path d="M104 250h247m-215 8h176" stroke="#a6c4ab" stroke-width="1.2" stroke-linecap="round" opacity=".55"/>
-        </svg>
-      </div>
-    </section>
-    <div class="wrap directory">
       <section class="browse" aria-labelledby="browse-title">
-        <div class="section-heading">
-          <p class="eyebrow"><span lang="en">START HERE</span><span lang="te">ఇక్కడ ప్రారంభించండి</span></p>
-          <h2 id="browse-title"><span lang="en">Browse by category</span><span lang="te">విభాగాల వారీగా చూడండి</span></h2>
-        </div>
+        <h2 id="browse-title"><span lang="en">Browse by category</span><span lang="te">విభాగాల వారీగా చూడండి</span></h2>
           <div class="category-grid">
             <a class="category" href="#land-property" data-category-link="land-property">
               <span class="category-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10l9-7 9 7M5 9v11h14V9M9 20v-6h6v6"/></svg></span>
@@ -89,10 +71,9 @@
             </a>
           </div>
       </section>
-      <section id="guides" class="guide-section" aria-labelledby="guide-title">
+      <section id="guide-results" class="guide-section" aria-labelledby="guide-title">
         <div class="section-heading guide-heading">
-          <div><p class="eyebrow"><span lang="en">THE DIRECTORY</span><span lang="te">సేవల సూచిక</span></p>
-          <h2 id="guide-title"><span lang="en">Service guides</span><span lang="te">సేవల వివరాలు</span></h2></div>
+          <h2 id="guide-title"><span lang="en">Service directory</span><span lang="te">సేవల సూచిక</span></h2>
           <div class="guide-tools">
             <span id="result-count" role="status"></span>
             <button id="clear-filter" type="button" hidden><span lang="en">Show all guides</span><span lang="te">అన్ని సేవలను చూపండి</span></button>
@@ -223,19 +204,10 @@
           </details>
         </section>
       </section>
-      <aside class="map-feature" aria-labelledby="map-title">
-        <div>
-          <p class="eyebrow"><span lang="en">FROM RAVEN</span><span lang="te">రేవెన్ నుండి</span></p>
-          <h2 id="map-title"><span lang="en">Explore the Hyderabad property map</span><span lang="te">హైదరాబాద్ ఆస్తుల మ్యాప్ చూడండి</span></h2>
-          <p lang="en">Browse wards across GHMC, Cyberabad, and Malkajgiri and find property research resources.</p>
-          <p lang="te">జీహెచ్‌ఎంసీ, సైబరాబాద్, మల్కాజిగిరి వార్డులను చూడండి. ఆస్తుల సమాచారం కోసం ఉపయోగపడే లింకులను పొందండి.</p>
-        </div>
-        <a class="map-link" href="property-map.html#explore"><span lang="en">Open property map</span><span lang="te">ఆస్తుల మ్యాప్ తెరవండి</span> <span aria-hidden="true">↗</span></a>
-      </aside>
-    </div>
+    </section>
   </main>
-  <footer class="site-footer">
-    <div class="wrap footer-inner">
+  <footer class="citizen-footer">
+    <div class="wide footer-inner">
       <p lang="en"><strong>Hyderabad Citizen Guide · Raven</strong><br>An independent guide. Applications and payments happen on the official portals.</p>
       <p lang="te"><strong>హైదరాబాద్ పౌర సేవల మార్గదర్శిని · రేవెన్</strong><br>ఇది స్వతంత్ర మార్గదర్శిని. దరఖాస్తులు, చెల్లింపులు అధికారిక పోర్టళ్లలో చేయండి.</p>
       <a href="contact.html"><span lang="en">Contact Raven</span><span lang="te">రేవెన్‌ను సంప్రదించండి</span></a>
