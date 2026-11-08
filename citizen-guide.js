@@ -1,10 +1,11 @@
-if (['#explore', '#community'].includes(location.hash)) {
-  location.replace('property-map.html' + location.hash);
+if (location.hash === '#community') {
+  location.replace('property-map.html' + location.search + location.hash);
 }
 
 const searchForm = document.querySelector('.search');
 const search = document.querySelector('#service-search');
-const guides = document.querySelector('#guides');
+const guides = document.querySelector('#guide-results');
+const guideHeading = document.querySelector('#guide-title');
 const count = document.querySelector('#result-count');
 const clearFilter = document.querySelector('#clear-filter');
 const noResults = document.querySelector('#no-results');
@@ -64,8 +65,9 @@ for (const category of categories) {
     search.value = '';
     activeCategory = category.dataset.categoryLink;
     updateResults();
+    location.hash = 'guide-results';
     guides.scrollIntoView();
-    document.querySelector('#guide-title').focus({ preventScroll: true });
+    guideHeading.focus({ preventScroll: true });
   });
 }
 search.addEventListener('input', () => {
@@ -74,16 +76,17 @@ search.addEventListener('input', () => {
 });
 searchForm.addEventListener('submit', event => {
   event.preventDefault();
+  location.hash = 'guide-results';
   guides.scrollIntoView();
-  document.querySelector('#guide-title').focus({ preventScroll: true });
+  guideHeading.focus({ preventScroll: true });
 });
 clearFilter.addEventListener('click', () => {
   search.value = '';
   activeCategory = '';
   updateResults();
-  document.querySelector('#guide-title').focus({ preventScroll: true });
+  guideHeading.focus({ preventScroll: true });
 });
 
-document.querySelector('#guide-title').tabIndex = -1;
+guideHeading.tabIndex = -1;
 for (const element of document.querySelectorAll('[data-enhancement]')) element.hidden = false;
 setLanguage('en');

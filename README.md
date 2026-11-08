@@ -1,6 +1,6 @@
 # Raven · Hyderabad Citizen Guide
 
-The homepage offers 12 English and Telugu guides to Telangana government services for Hyderabad residents. Each guide links to official sources. The [property map](property-map.html) includes 300 ward selections, corporation boundaries, a contact dialog, and shared discussions. See [SETUP.md](SETUP.md) for development, Vercel settings, service configuration, limitations, and data provenance. Run `npm test` and `npm run build`.
+The homepage starts with the interactive property map, followed by 12 English and Telugu guides to Telangana government services. The [dedicated property map page](property-map.html) also includes the community section. Every page uses the same navigation. See [SETUP.md](SETUP.md) for development, Vercel settings, service configuration, limitations, and data provenance. Run `npm test` and `npm run build`.
 
 Direct email delivery and shared posting require owner-configured server services. The map contains no verified rupee figures until reviewed records are imported.
 
@@ -29,21 +29,22 @@ A beginner-friendly, static educational website about Hyderabad residential prop
 | `images/README.md` | Notes about image licensing |
 | `CNAME.example` | Inactive example for a future custom domain |
 
-The pages use relative paths such as `styles.css` and `./data/localities.json`. This lets the same files work on a local server and under a GitHub Pages **project URL**.
+Run `npm run build` to assemble the shared header and map. The built pages use relative paths such as `styles.css` and `./data/localities.json`. This lets the same files work on a local server and under a GitHub Pages **project URL**.
 
 ## 2. Open it on your laptop
 
 1. On GitHub, select **Code → Download ZIP** and unzip it, or run `git clone https://github.com/vamshiravular/hyderabad-property-data.git` in a terminal.
 2. Open the `hyderabad-property-data` folder in VS Code.
-3. Start a local server. With Python installed, run:
+3. Build the site and start the local server:
 
    ```bash
    cd hyderabad-property-data
-   python -m http.server 8000
+   npm run build
+   npm run dev -- --port 8000
    ```
 
-   Open `http://localhost:8000/` in your browser. On some systems use `python3 -m http.server 8000`. VS Code's **Live Server** extension is another option: open `index.html` and choose **Open with Live Server**.
-4. Stop the Python server with **Ctrl+C**.
+   Open `http://localhost:8000/` in your browser. The server serves the built pages from `dist/`.
+4. Stop the local server with **Ctrl+C**.
 
 Do not double-click an HTML file and use a `file://` URL for testing: browsers often block JavaScript `fetch()` of a neighboring JSON file that way. Use the local server above.
 
